@@ -18,15 +18,15 @@ type Configer struct {
 }
 type Database struct {
 	MysqlDsn string `json:"mysql_dsn"`
-	redisUrl string `json:"redis_url"`
+	PgDsn string `json:"pg_dsn"`
+	RedisUrl string `json:"redis_url"`
 }
 
 // Init 初始化配置项,返回端口号
 func Init() {
 	conf := GetConfig()
 	// 连接数据库
-	model.Database(conf.Database.MysqlDsn)
-	model.RedisPool(conf.Database.redisUrl, "")
+	model.Database(conf.Database.PgDsn)
 
 	// 返回配置文件中服务端口号
 

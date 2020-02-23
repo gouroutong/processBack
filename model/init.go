@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"time"
 )
 
@@ -15,7 +15,7 @@ var RS *redis.Pool
 // Database 在中间件中初始化mysql链接
 func Database(connString string) {
 	fmt.Println("mysql connect start")
-	db, err := gorm.Open("mysql", connString)
+	db, err := gorm.Open("postgres", connString)
 	//db.LogMode(true)
 	db.SingularTable(true)
 	// Error
