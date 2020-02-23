@@ -1,0 +1,11 @@
+{
+   "database": {
+     "mysql_dsn": "root:123456@tcp(localhost)/xprocess?charset=utf8&parseTime=True&loc=Local",
+     "redis_url": "redis://127.0.0.1:6379"
+   },
+   "server": ":3001",
+   "client_name": "orgneering.xprocess.com",
+   "usv_name": "orgneering.xprocess.users",
+   "file_path": "assets/file/",
+   "export_path": "./assets/exportFile/",
+ }
