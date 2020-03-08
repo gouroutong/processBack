@@ -1,13 +1,13 @@
 package router
 
 import (
+	"fmt"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/context"
 	"github.com/kataras/iris/core/router"
 	userHandle "xProcessBackend/controller"
-	"xProcessBackend/middleware"
 	"xProcessBackend/serializer"
 
 	//"github.com/kataras/iris/core/router"
@@ -30,6 +30,7 @@ func Router() *iris.Application {
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})
+	fmt.Print(jwtConfig)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
@@ -45,10 +46,10 @@ func Router() *iris.Application {
 			user.Post("/new", userHandle.New)
 			user.Post("/login", userHandle.Login)
 		})
-		router1.Use(jwtConfig.Serve, middleware.Handle)
+		//router1.Use(jwtConfig.Serve, middleware.Handle)
 		router1.PartyFunc("/home", func(home router.Party) {
 			home.Get("/", func(ctx context.Context) {
-				ctx.JSON(serializer.GetResponse("home", nil))
+				ctx.JSON(serializer.GetResponse("home success", nil))
 			})
 		})
 	}
