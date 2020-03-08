@@ -1,6 +1,7 @@
-# from fabric import *
+from fabric import *
 
-from fabric import task
+
+# from fabric import task
 
 
 @task
