@@ -38,7 +38,8 @@ func Router() *iris.Application {
 		AllowCredentials: true,
 	})
 	app.StaticWeb("/api/static", "assets")
-	router1 := app.Party("/api", crs).AllowMethods(iris.MethodOptions)
+	router1 := app.Party("/api", crs).
+		AllowMethods(iris.MethodOptions)
 	{
 		router1.PartyFunc("/user", func(user router.Party) {
 			user.Post("/new", userHandle.New)
