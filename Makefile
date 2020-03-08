@@ -9,3 +9,4 @@ build_process_linux:
 .PHONY: docker
 docker:
 	docker build . -t registry.cn-shanghai.aliyuncs.com/chenwentao/xprocess-backend:0.0.9
+
