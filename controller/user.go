@@ -1,4 +1,4 @@
-package userHandle
+package controller
 
 import (
 	"github.com/kataras/iris"

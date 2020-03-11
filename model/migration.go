@@ -2,5 +2,6 @@ package model
 
 func migration() {
 	DB.
-	AutoMigrate(&User{})
+		AutoMigrate(&User{}).
+		AutoMigrate(&Form{})
 }
