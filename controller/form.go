@@ -37,3 +37,14 @@ func GetList(ctx context.Context) {
 	err = model.GetList(&list)
 	ctx.JSON(serializer.GetResponse(list, err))
 }
+
+func DeleteItem(ctx context.Context) {
+	var (
+		formService model.Form
+		form        model.Form
+		err         error
+	)
+	ctx.ReadJSON(&formService)
+	err = formService.DeleteItem(&form)
+	ctx.JSON(serializer.GetResponse(form, err))
+}

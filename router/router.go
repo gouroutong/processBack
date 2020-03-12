@@ -8,6 +8,7 @@ import (
 	"github.com/kataras/iris/context"
 	"github.com/kataras/iris/core/router"
 	"xProcessBackend/controller"
+	"xProcessBackend/middleware"
 	"xProcessBackend/serializer"
 	//"github.com/kataras/iris/core/router"
 )
@@ -45,7 +46,7 @@ func Router() *iris.Application {
 			user.Post("/new", controller.New)
 			user.Post("/login", controller.Login)
 		})
-		//router1.Use(jwtConfig.Serve, middleware.Handle)
+		router1.Use(jwtConfig.Serve, middleware.Handle)
 		router1.PartyFunc("/home", func(home router.Party) {
 			home.Get("/", func(ctx context.Context) {
 				ctx.JSON(serializer.GetResponse("home success", nil))
@@ -55,6 +56,7 @@ func Router() *iris.Application {
 			form.Post("/new", controller.NewOrUpdate)
 			form.Post("/item", controller.GetItem)
 			form.Post("/list", controller.GetList)
+			form.Post("/delete", controller.DeleteItem)
 
 		})
 	}
