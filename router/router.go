@@ -47,6 +47,10 @@ func Router() *iris.Application {
 			user.Post("/login", controller.Login)
 		})
 		router1.Use(jwtConfig.Serve, middleware.Handle)
+		router1.PartyFunc("/user", func(user router.Party) {
+			user.Post("/get_all", controller.GetAllUSer)
+		})
+
 		router1.PartyFunc("/home", func(home router.Party) {
 			home.Get("/", func(ctx context.Context) {
 				ctx.JSON(serializer.GetResponse("home success", nil))
@@ -57,6 +61,14 @@ func Router() *iris.Application {
 			form.Post("/item", controller.GetItem)
 			form.Post("/list", controller.GetList)
 			form.Post("/delete", controller.DeleteItem)
+
+		})
+
+		router1.PartyFunc("/process", func(process router.Party) {
+			process.Post("/save", controller.NewOrUpdateProcess)
+			process.Post("/list", controller.GetProcessList)
+			process.Post("/item", controller.GetProcessItem)
+			process.Post("/delete", controller.DeleteProcessItem)
 
 		})
 	}

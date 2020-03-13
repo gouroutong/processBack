@@ -27,3 +27,14 @@ func Login(ctx context.Context) {
 	err := user.Login(&userWrap)
 	ctx.JSON(serializer.GetResponse(userWrap, err))
 }
+
+func GetAllUSer(ctx context.Context) {
+	var (
+		userService model.User
+		list        []model.User
+		err         error
+	)
+	ctx.ReadJSON(&userService)
+	err = model.GetAllUser(&list)
+	ctx.JSON(serializer.GetResponse(list, err))
+}

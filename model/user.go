@@ -9,6 +9,7 @@ import (
 var mySecret = []byte("My Secret")
 
 type User struct {
+	Id       int
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
@@ -43,4 +44,8 @@ func (user *User) Login(userWrap *UserWrap) error {
 	}
 	userWrap.Token = tokenString
 	return nil
+}
+
+func GetAllUser(list *[]User) error {
+	return DB.Order("id asc").Find(list).Error
 }
