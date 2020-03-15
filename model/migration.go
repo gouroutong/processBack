@@ -5,5 +5,7 @@ func migration() {
 		AutoMigrate(&User{}).
 		AutoMigrate(&Form{}).
 		AutoMigrate(&Process{}).
-		AutoMigrate(&Node{})
+		AutoMigrate(&Node{}).
+		AutoMigrate(&Apply{}).
+		AutoMigrate(&ApplyForm{})
 }
