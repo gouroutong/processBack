@@ -12,6 +12,7 @@ type Apply struct {
 	UpdatedAt time.Time
 	DeletedAt *time.Time
 	Status    int
+	ProcessId int64
 }
 
 type ApplyForm struct {
@@ -24,7 +25,10 @@ func (applyService *Apply) NewApply(apply *Apply) error {
 	if applyService.Id == 0 {
 		return DB.Create(applyService).Error
 	} else {
-		err := DB.Model(applyService).Where("id =?", applyService.Id).First(&apply).Error
+		var (
+			err       error
+		)
+		err = DB.Model(applyService).Where("id =?", applyService.Id).First(&apply).Error
 		if err != nil {
 			return err
 		}
@@ -42,4 +46,12 @@ func (applyService *Apply) GetApplyItem(apply *Apply) error {
 		return err
 	}
 	return DB.Where("apply_id =?", applyService.Id).Find(&apply.Form).Error
+}
+
+func GetApplyList(list *[]Apply) error {
+	return DB.Order("id asc").Find(list).Error
+}
+
+func (applyService *Apply)DeleteApplyItem(apply *Apply) error {
+	return DB.Where("id =?", applyService.Id).Delete(apply).Error
 }

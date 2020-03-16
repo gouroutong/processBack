@@ -74,9 +74,9 @@ func Router() *iris.Application {
 
 		router1.PartyFunc("/apply", func(apply router.Party) {
 			apply.Post("/save", controller.NewApply)
-			// apply.Post("/list", controller.GetProcessList)
+			apply.Post("/list", controller.GetApplyList)
 			apply.Post("/item", controller.GetApplyItem)
-			// apply.Post("/delete", controller.DeleteProcessItem)
+			apply.Post("/delete", controller.DeleteApplyItem)
 
 		})
 	}
