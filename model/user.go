@@ -34,7 +34,8 @@ func (user *User) Login(userWrap *UserWrap) error {
 		return errors.New("incorrect password")
 	}
 	token := jwt.NewTokenWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"foo": "bar",
+		"userId":   userWrap.Id,
+		"username": userWrap.Username,
 	})
 
 	// Sign and get the complete encoded token as a string using the secret

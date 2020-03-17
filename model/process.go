@@ -13,6 +13,7 @@ type Node struct {
 	Username  string
 	FormName  string
 	ProcessId int64 `gorm:"index"`
+	Operate   int64
 }
 
 type Process struct {
@@ -22,6 +23,11 @@ type Process struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time
+}
+
+type ProcessWrap struct {
+	Process
+	UserId int64
 }
 
 func (processService *Process) NewOrUpdateProcess(process *Process) error {
@@ -35,12 +41,22 @@ func (processService *Process) NewOrUpdateProcess(process *Process) error {
 		return DB.Model(processService).Where("id =?", processService.Id).Update(processService).Error
 	}
 }
-func (processService *Process) GetProcessItem(process *Process) error {
+func (processService *ProcessWrap) GetProcessItem(process *Process) error {
 	err := DB.Where("id =?", processService.Id).Find(process).Error
 	if err != nil {
 		return err
 	}
-	return DB.Where("process_id =?", processService.Id).Find(&process.NodeList).Error
+	err = DB.Where("process_id =?", processService.Id).Find(&process.NodeList).Error
+	if err != nil {
+		return err
+	}
+	for i := 0; i < len(process.NodeList); i++ {
+		item := &process.NodeList[i]
+		if item.UserId == 0 || (item.UserId != 0 && processService.UserId == item.UserId) {
+			item.Operate = 1
+		}
+	}
+	return nil
 }
 func GetProcessList(list *[]Process) error {
 	return DB.Order("id asc").Find(list).Error

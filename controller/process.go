@@ -18,11 +18,14 @@ func NewOrUpdateProcess(ctx context.Context) {
 }
 func GetProcessItem(ctx context.Context) {
 	var (
-		processService model.Process
+		processService model.ProcessWrap
 		process        model.Process
 		err            error
 	)
 	ctx.ReadJSON(&processService)
+	userId := ctx.Values().Get("userId")
+	newUserId, _ := userId.(int64)
+	processService.UserId = newUserId
 	err = processService.GetProcessItem(&process)
 	ctx.JSON(serializer.GetResponse(process, err))
 }
