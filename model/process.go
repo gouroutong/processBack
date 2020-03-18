@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -13,7 +14,7 @@ type Node struct {
 	Username  string
 	FormName  string
 	ProcessId int64 `gorm:"index"`
-	Operate   int64
+	Opera     int64 `gorm:"-"`
 }
 
 type Process struct {
@@ -52,8 +53,13 @@ func (processService *ProcessWrap) GetProcessItem(process *Process) error {
 	}
 	for i := 0; i < len(process.NodeList); i++ {
 		item := &process.NodeList[i]
-		if item.UserId == 0 || (item.UserId != 0 && processService.UserId == item.UserId) {
-			item.Operate = 1
+		if item.UserId == 0 {
+			item.Opera = 1
+			continue
+		}
+		fmt.Println(processService.UserId, item.UserId, processService.UserId == item.UserId)
+		if processService.UserId == item.UserId {
+			item.Opera = 1
 		}
 	}
 	return nil
