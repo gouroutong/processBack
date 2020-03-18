@@ -11,12 +11,13 @@ def tar_task():
     local("make build_process_linux")
     with lcd("bin"):
         local('tar -czvf process-server.tar.gz process-server')
-        local('scp process-server.tar.gz root@47.107.230.235:program/process')
 
 
 @task
 def put_task():
-    with cd("program/process"):
+    with settings(warn_only=True):
+        put("bin/process-server.tar.gz", "/root/program/process/process-server.tar.gz")
+    with cd("/root/program/process"):
         run('tar -xzvf process-server.tar.gz')
         run("rm -rf process-server.tar.gz")
     with cd("/root"):

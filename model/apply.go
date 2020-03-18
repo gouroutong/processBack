@@ -6,13 +6,16 @@ import (
 )
 
 type Apply struct {
-	Id        int64
-	Form      []ApplyForm
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time
-	Status    int
-	ProcessId int64
+	Id            int64
+	Form          []ApplyForm
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	DeletedAt     *time.Time
+	Status        int
+	ProcessId     int64
+	StartUserId   int64
+	StartUsername string
+	ProcessName   string
 }
 
 type ApplyForm struct {
@@ -26,7 +29,7 @@ func (applyService *Apply) NewApply(apply *Apply) error {
 		return DB.Create(applyService).Error
 	} else {
 		var (
-			err       error
+			err error
 		)
 		err = DB.Model(applyService).Where("id =?", applyService.Id).First(&apply).Error
 		if err != nil {
@@ -48,10 +51,10 @@ func (applyService *Apply) GetApplyItem(apply *Apply) error {
 	return DB.Where("apply_id =?", applyService.Id).Find(&apply.Form).Error
 }
 
-func GetApplyList(list *[]Apply) error {
-	return DB.Order("id asc").Find(list).Error
+func GetApplyList(list *[]Apply, userId int64) error {
+	return DB.Order("id asc").Where("start_user_id=?", userId).Find(list).Error
 }
 
-func (applyService *Apply)DeleteApplyItem(apply *Apply) error {
+func (applyService *Apply) DeleteApplyItem(apply *Apply) error {
 	return DB.Where("id =?", applyService.Id).Delete(apply).Error
 }

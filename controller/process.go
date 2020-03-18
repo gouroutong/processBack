@@ -23,9 +23,8 @@ func GetProcessItem(ctx context.Context) {
 		err            error
 	)
 	ctx.ReadJSON(&processService)
-	userId := ctx.Values().Get("userId")
-	newUserId, _ := userId.(int64)
-	processService.UserId = newUserId
+	userId := ctx.Values().Get("userId").(float64)
+	processService.UserId = int64(userId)
 	err = processService.GetProcessItem(&process)
 	ctx.JSON(serializer.GetResponse(process, err))
 }

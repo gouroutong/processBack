@@ -9,7 +9,7 @@ import (
 var mySecret = []byte("My Secret")
 
 type User struct {
-	Id       int
+	Id       int64
 	Username string `json:"username"`
 	Password string `json:"password"`
 }

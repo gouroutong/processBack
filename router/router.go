@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
@@ -30,7 +29,6 @@ func Router() *iris.Application {
 		},
 		SigningMethod: jwt.SigningMethodHS256,
 	})
-	fmt.Print(jwtConfig)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},

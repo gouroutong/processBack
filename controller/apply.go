@@ -13,6 +13,12 @@ func NewApply(ctx context.Context) {
 		err          error
 	)
 	ctx.ReadJSON(&applyService)
+	if applyService.Id == 0 {
+		userId := ctx.Values().Get("userId").(float64)
+		username := ctx.Values().Get("username").(string)
+		applyService.StartUserId = int64(userId)
+		applyService.StartUsername = username
+	}
 	err = applyService.NewApply(&apply)
 	ctx.JSON(serializer.GetResponse(apply, err))
 }
@@ -34,7 +40,8 @@ func GetApplyList(ctx context.Context) {
 		applyList []model.Apply
 		err       error
 	)
-	err = model.GetApplyList(&applyList)
+	userId := ctx.Values().Get("userId").(float64)
+	err = model.GetApplyList(&applyList, int64(userId))
 	ctx.JSON(serializer.GetResponse(applyList, err))
 
 }
