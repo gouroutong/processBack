@@ -60,6 +60,8 @@ func (processService *ProcessWrap) GetProcessItem(process *Process) error {
 		fmt.Println(processService.UserId, item.UserId, processService.UserId == item.UserId)
 		if processService.UserId == item.UserId {
 			item.Opera = 1
+		}else{
+			item.Opera = 0
 		}
 	}
 	return nil

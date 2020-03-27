@@ -59,7 +59,6 @@ func Router() *iris.Application {
 			form.Post("/item", controller.GetItem)
 			form.Post("/list", controller.GetList)
 			form.Post("/delete", controller.DeleteItem)
-
 		})
 
 		router1.PartyFunc("/process", func(process router.Party) {
@@ -75,6 +74,10 @@ func Router() *iris.Application {
 			apply.Post("/list", controller.GetApplyList)
 			apply.Post("/item", controller.GetApplyItem)
 			apply.Post("/delete", controller.DeleteApplyItem)
+
+		})
+		router1.PartyFunc("/event", func(event router.Party) {
+			event.Post("/list", controller.GetAuditApplyList)
 
 		})
 	}

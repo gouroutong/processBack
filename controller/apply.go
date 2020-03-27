@@ -46,6 +46,17 @@ func GetApplyList(ctx context.Context) {
 
 }
 
+func GetAuditApplyList(ctx context.Context) {
+	var (
+		applyList []model.Apply
+		err       error
+	)
+	userId := ctx.Values().Get("userId").(float64)
+	err = model.GetAuditApplyList(&applyList, int64(userId))
+	ctx.JSON(serializer.GetResponse(applyList, err))
+
+}
+
 func DeleteApplyItem(ctx context.Context) {
 
 	var (

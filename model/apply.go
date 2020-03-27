@@ -16,6 +16,7 @@ type Apply struct {
 	StartUserId   int64
 	StartUsername string
 	ProcessName   string
+	NextRoleId    int64
 }
 
 type ApplyForm struct {
@@ -53,6 +54,9 @@ func (applyService *Apply) GetApplyItem(apply *Apply) error {
 
 func GetApplyList(list *[]Apply, userId int64) error {
 	return DB.Order("id asc").Where("start_user_id=?", userId).Find(list).Error
+}
+func GetAuditApplyList(list *[]Apply, userId int64) error {
+	return DB.Order("id asc").Where("next_role_id=?", userId).Find(list).Error
 }
 
 func (applyService *Apply) DeleteApplyItem(apply *Apply) error {
