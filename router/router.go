@@ -78,8 +78,9 @@ func Router() *iris.Application {
 		})
 		router1.PartyFunc("/event", func(event router.Party) {
 			event.Post("/list", controller.GetAuditApplyList)
-
 		})
+		//mvc.Configure(router1.Party("/websocket"), ws.ConfigureMVC)
 	}
+
 	return app
 }

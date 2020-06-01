@@ -13,13 +13,13 @@ func NewApply(ctx context.Context) {
 		err          error
 	)
 	ctx.ReadJSON(&applyService)
+	userId := ctx.Values().Get("userId").(float64)
 	if applyService.Id == 0 {
-		userId := ctx.Values().Get("userId").(float64)
 		username := ctx.Values().Get("username").(string)
 		applyService.StartUserId = int64(userId)
 		applyService.StartUsername = username
 	}
-	err = applyService.NewApply(&apply)
+	err = applyService.NewApply(&apply, int64(userId))
 	ctx.JSON(serializer.GetResponse(apply, err))
 }
 

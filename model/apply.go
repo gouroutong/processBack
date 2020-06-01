@@ -3,6 +3,7 @@ package model
 import (
 	"errors"
 	"time"
+	"xProcessBackend/ws"
 )
 
 type Apply struct {
@@ -25,7 +26,11 @@ type ApplyForm struct {
 	Content string `gorm:"type:text"`
 }
 
-func (applyService *Apply) NewApply(apply *Apply) error {
+func (applyService *Apply) NewApply(apply *Apply, userId int64) error {
+	if (applyService.NextRoleId != 0) || (applyService.NextRoleId == userId) {
+		ws.ConnIns.Update()
+	}
+
 	if applyService.Id == 0 {
 		return DB.Create(applyService).Error
 	} else {
